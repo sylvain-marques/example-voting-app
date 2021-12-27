@@ -4,7 +4,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import java.sql.*;
 import org.json.JSONObject;
-
+/* add a temporary command */
 class Worker {
   public static void main(String[] args) {
     try {
