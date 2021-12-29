@@ -19,6 +19,7 @@ pipeline {
                 echo 'Running uniit tests on worker app'
                 dir('worker'){
                   sh 'mvn clean test'
+                }
             }
         }
         
