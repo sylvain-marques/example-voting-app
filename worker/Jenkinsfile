@@ -28,6 +28,7 @@ pipeline {
                 echo 'packaging worker app'
                 dir('worker'){
                   sh 'mvn package'
+                }
             }
         }
     }
