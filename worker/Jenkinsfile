@@ -6,6 +6,9 @@ pipeline {
     
     stages {
         stage('build') {
+          when {
+            changeset "**/worker/**"
+          }
             steps {
                 echo 'compiling worker app'
                 dir('worker'){
@@ -15,6 +18,9 @@ pipeline {
         }
         
         stage('test job') {
+          when {
+            changeset "**/worker/**"
+          }
             steps {
                 echo 'Running uniit tests on worker app'
                 dir('worker'){
@@ -24,6 +30,10 @@ pipeline {
         }
         
         stage('package') {
+          when {
+            branch 'master'
+            changeset "**/worker/**"
+          }
             steps {
                 echo 'packaging worker app'
                 dir('worker'){
