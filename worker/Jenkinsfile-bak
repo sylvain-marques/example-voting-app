@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+    tools{
+      maven 'maven 3.6.1'
+    }
+    
+    stages {
+        stage('build') {
+          when {
+            changeset "**/worker/**"
+          }
+            steps {
+                echo 'compiling worker app'
+                dir('worker'){
+                  sh 'mvn compile'
+                }
+            }
+        }
+        
+        stage('test job') {
+          when {
+            changeset "**/worker/**"
+          }
+            steps {
+                echo 'Running uniit tests on worker app'
+                dir('worker'){
+                  sh 'mvn clean test'
+                }
+            }
+        }
+        
+        stage('package') {
+          when {
+            branch 'master'
+            changeset "**/worker/**"
+          }
+            steps {
+                echo 'packaging worker app'
+                dir('worker'){
+                  sh 'mvn package -DskipTests'
+                  archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                }
+            }
+        }
+    }
+    
+    post{
+        always{
+            echo 'Build pipeline is completed for worker app.. including 3 jobs or stages'
+        }
+    }
+}
+
