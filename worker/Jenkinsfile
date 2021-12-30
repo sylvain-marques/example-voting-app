@@ -8,6 +8,9 @@ pipeline{
 
 stages{
   stage('build'){
+    when{
+      changeset "**/worker/**"
+    }
     steps{
       echo 'building worker app'
       dir('worker'){
@@ -17,6 +20,9 @@ stages{
   }
 
 stage('test'){
+  when{
+    changeset "**/worker/**"
+  }
   steps{
     echo 'running unit tests on worker app'
       dir('worker'){
@@ -26,6 +32,9 @@ stage('test'){
   }
 
 stage('package'){
+  when{
+    changeset "**/worker/**"
+  }
   steps{
     echo 'packaging worker app into a jarfile'
       dir('worker'){
