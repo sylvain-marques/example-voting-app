@@ -1,13 +1,15 @@
 pipeline{
-  agent{
-    docker{
-      image 'maven:3.6.1-jdk-8-slim'
-      args '-v $HOME/.m2:/root/.m2'
-    }
-  }
+
+  agent none
 
 stages{
   stage('build'){
+    agent{
+      docker{
+        image 'maven:3.6.1-jdk-8-slim'
+        args '-v $HOME/.m2:/root/.m2'
+      }
+    }
     when{
       changeset "**/worker/**"
     }
@@ -20,6 +22,12 @@ stages{
   }
 
   stage('test'){
+    agent{
+      docker{
+        image 'maven:3.6.1-jdk-8-slim'
+        args '-v $HOME/.m2:/root/.m2'
+      }
+    }
     when{
       changeset "**/worker/**"
     }
@@ -32,6 +40,12 @@ stages{
     }
 
   stage('package'){
+    agent{
+      docker{
+        image 'maven:3.6.1-jdk-8-slim'
+        args '-v $HOME/.m2:/root/.m2'
+      }
+    }
     when{
       changeset "**/worker/**"
     }
@@ -45,6 +59,7 @@ stages{
     }
 
   stage('docker-package'){
+    agent any
     when{
       changeset "**/worker/**"
     }
