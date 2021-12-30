@@ -49,10 +49,10 @@ stage('test'){
       echo 'Packaging vote app with docker'
       script{
          docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
-           def workerImage = docker.build("sylvainmarques/worker:v${env.BUILD_ID}", "./vote")
-           workerImage.push()
-           workerImage.push("latest")
-           workerImage.push("${env.BRANCH_NAME}")
+           def voteImage = docker.build("sylvainmarques/vote:v${env.BUILD_ID}", "./vote")
+           voteImage.push()
+           voteImage.push("latest")
+           voteImage.push("${env.BRANCH_NAME}")
          }
       }
     }
