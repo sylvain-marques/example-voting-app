@@ -34,7 +34,7 @@ stages{
       echo 'running unit tests on result app'
         dir('result'){
           sh 'npm install'
-          sh 'mpm test'
+          sh 'npm test'
         }
       }
     }
