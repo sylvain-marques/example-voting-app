@@ -62,6 +62,7 @@ stages{
     agent any
     when{
       changeset "**/worker/**"
+      branch 'master'
     }
     steps{
       echo 'Packaging worker app with docker'
@@ -70,6 +71,7 @@ stages{
            def workerImage = docker.build("sylvainmarques/worker:v${env.BUILD_ID}", "./worker")
            workerImage.push()
            workerImage.push("latest")
+           workerImage.push("${env.BRANCH_NAME}")
          }
       }
     }
